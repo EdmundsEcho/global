@@ -1,0 +1,1095 @@
+4m➜  global :l lookups.hs 
+zsh: command not found: :l
+4m➜  global stack ghci
+Run from outside a project, using implicit global project config
+Using resolver: lts-5.0 from implicit global project's config file: /U
+sers/edmundcape/.stack/global-project/stack.yaml                     
+Error parsing targets: The specified targets matched no packages.
+Perhaps you need to run 'stack init'?
+Warning: build failed, but optimistically launching GHCi anyway
+Configuring GHCi with the following packages: 
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Ok, modules loaded: none.
+Prelude
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+
+lookups.hs:2:10:
+    No instance for (Num (Maybe Integer)) arising from a use of ‘+’
+    In the expression: + 3
+    In the expression: (+ 3) (lookup 3 $ zip [1, 2, 3] [4, 5, 6])
+    In an equation for ‘added’:
+        added = (+ 3) (lookup 3 $ zip [1, 2, 3] [4, 5, 6])
+Failed, modules loaded: none.
+Prelude
+λ> 
+Prelude
+λ> :t lookup
+lookup :: Eq a => a -> [(a, b)] -> Maybe b
+Prelude
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+
+lookups.hs:11:10:
+    Couldn't match expected type ‘Maybe (Integer, Integer)’
+                with actual type ‘(Maybe Integer, Maybe Integer)’
+    In the expression: (,) y z
+    In an equation for ‘tupled’: tupled = (,) y z
+Failed, modules loaded: none.
+Prelude
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+
+lookups.hs:19:1:
+    Duplicate type signatures for ‘y’
+    at lookups.hs:7:1
+       lookups.hs:19:1
+
+lookups.hs:20:1:
+    Multiple declarations of ‘y’
+    Declared at: lookups.hs:8:1
+                 lookups.hs:20:1
+Failed, modules loaded: none.
+Prelude
+λ> :l lookups.hs 
+[1 of 1] Compiling Main             ( lookups.hs, interpreted )
+
+lookups.hs:26:9:
+    Couldn't match expected type ‘Maybe Int’ with actual type ‘Int’
+    In the expression: max' x y'
+    In an equation for ‘maxed’: maxed = max' x y'
+
+lookups.hs:26:14:
+    Couldn't match expected type ‘Int’ with actual type ‘Maybe Int’
+    In the first argument of ‘max'’, namely ‘x’
+    In the expression: max' x y'
+
+lookups.hs:26:16:
+    Couldn't match expected type ‘Int’ with actual type ‘Maybe Int’
+    In the second argument of ‘max'’, namely ‘y'’
+λ>  :l identity.hs 
+[1 of 1] Compiling Main             ( identity.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> const <$> [1,2,3] <*> [9,9,9]
+[1,1,1,2,2,2,3,3,3]
+*Main
+λ> const <$> Identity [1,2,3] <*> Identity [9,9,9]
+Identity [1,2,3]
+*Main
+λ> const <$> [1,2,3] <*> [5,7,9]
+[1,1,1,2,2,2,3,3,3]
+*Main
+λ> const <$> Identity [1,2,3] <*> Identity [5,7,9]
+Identity [1,2,3]
+*Main
+λ> (,) <$> Identity [1,2,3] <*> Identity [5,7,9]
+Identity ([1,2,3],[5,7,9])
+*Main
+λ> (,) <$> [1,2,3] <*> [5,7,9]
+[(1,5),(1,7),(1,9),(2,5),(2,7),(2,9),(3,5),(3,7),(3,9)]
+*Main
+λ> Identity (const [1,2,3]) <*> Identity [5,7,9]
+Identity [1,2,3]
+*Main
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:5:34:
+    Couldn't match expected type ‘a’ with actual type ‘b’
+      ‘b’ is a rigid type variable bound by
+          the type signature for
+            fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+          at constant.hs:5:3
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:4:10
+    Relevant bindings include
+      c :: a (bound at constant.hs:5:20)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    In the first argument of ‘Constant’, namely ‘(f c)’
+    In the expression: Constant (f c)
+
+constant.hs:5:36:
+    Couldn't match expected type ‘a1’ with actual type ‘a’
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:4:10
+      ‘a1’ is a rigid type variable bound by
+           the type signature for
+             fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+           at constant.hs:5:3
+    Relevant bindings include
+      c :: a (bound at constant.hs:5:20)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    In the first argument of ‘f’, namely ‘c’
+    In the first argument of ‘Constant’, namely ‘(f c)’
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:5:34:
+    Couldn't match expected type ‘a’ with actual type ‘b’
+      ‘b’ is a rigid type variable bound by
+          the type signature for
+            fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+          at constant.hs:5:3
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:4:10
+    Relevant bindings include
+      c :: a (bound at constant.hs:5:20)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    In the first argument of ‘Constant’, namely ‘(f (getConstant c))’
+    In the expression: Constant (f (getConstant c))
+
+constant.hs:5:50:
+    Couldn't match expected type ‘Constant a1 b0’ with actual type ‘a’
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:4:10
+    Relevant bindings include
+      c :: a (bound at constant.hs:5:20)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    In the first argument of ‘getConstant’, namely ‘c’
+    In the first argument of ‘f’, namely ‘(getConstant c)’
+Failed, modules loaded: none.
+Prelude
+λ> 
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :t getConstant
+getConstant :: Constant a b -> a
+*Main
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:5:24:
+    Couldn't match expected type ‘a’ with actual type ‘b’
+      ‘b’ is a rigid type variable bound by
+          the type signature for
+            fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+          at constant.hs:5:3
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:4:10
+    Relevant bindings include
+      c :: Constant a a1 (bound at constant.hs:5:10)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    In the first argument of ‘Constant’, namely ‘(f (getConstant c))’
+    In the expression: Constant (f (getConstant c))
+
+constant.hs:5:40:
+    Couldn't match type ‘a’ with ‘a1’
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:4:10
+      ‘a1’ is a rigid type variable bound by
+           the type signature for
+             fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+           at constant.hs:5:3
+    Expected type: Constant a1 a1
+      Actual type: Constant a a1
+    Relevant bindings include
+      c :: Constant a a1 (bound at constant.hs:5:10)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    In the first argument of ‘getConstant’, namely ‘c’
+    In the first argument of ‘f’, namely ‘(getConstant c)’
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> let n = Constant 4
+*Main
+λ> n
+Constant {getConstant = 4}
+*Main
+λ> n 5
+
+<interactive>:30:1:
+    Couldn't match expected type ‘Integer -> t’
+                with actual type ‘Constant Integer b0’
+    Relevant bindings include it :: t (bound at <interactive>:30:1)
+    The function ‘n’ is applied to one argument,
+    but its type ‘Constant Integer b0’ has none
+    In the expression: n 5
+    In an equation for ‘it’: it = n 5
+*Main
+λ> getConstant n 4
+
+<interactive>:31:1:
+    Non type-variable argument in the constraint: Num (a -> t)
+    (Use FlexibleContexts to permit this)
+    When checking that ‘it’ has the inferred type
+      it :: forall a t. (Num a, Num (a -> t)) => t
+*Main
+λ> getConstant n
+4
+*Main
+λ> n
+Constant {getConstant = 4}
+*Main
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:5:14:
+    Couldn't match expected type ‘a -> Constant a b’
+                with actual type ‘Constant (a1 -> b) b0’
+    Relevant bindings include
+      c :: Constant a a1 (bound at constant.hs:5:10)
+      f :: a1 -> b (bound at constant.hs:5:8)
+      fmap :: (a1 -> b) -> Constant a a1 -> Constant a b
+        (bound at constant.hs:5:3)
+    The function ‘Constant’ is applied to two arguments,
+    but its type ‘(a1 -> b) -> Constant (a1 -> b) b0’ has only one
+    In the expression: Constant f (getConstant c)
+    In an equation for ‘fmap’: fmap f c = Constant f (getConstant c)
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:5:11:
+    Not in scope: data constructor ‘Constnant’
+    Perhaps you meant ‘Constant’ (line 1)
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:8:10:
+    Couldn't match type ‘a1’ with ‘a’
+      ‘a1’ is a rigid type variable bound by
+           the type signature for pure :: a1 -> Constant a a1
+           at constant.hs:8:3
+      ‘a’ is a rigid type variable bound by
+          the instance declaration at constant.hs:7:10
+    Expected type: a1 -> Constant a a1
+      Actual type: a -> Constant a a1
+    Relevant bindings include
+      pure :: a1 -> Constant a a1 (bound at constant.hs:8:3)
+    In the expression: Constant
+    In an equation for ‘pure’: pure = Constant
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:9:11:
+    Illegal type signature in instance declaration:
+      pure :: b -> Constant a b
+    (Use InstanceSigs to allow this)
+    In the instance declaration for ‘Applicative (Constant a)’
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:10:11:
+    Illegal type signature in instance declaration:
+      pure :: b -> Constant a b
+    (Use InstanceSigs to allow this)
+λ>  
+*Main
+λ> :l BadMonoid.hs 
+
+BadMonoid.hs:3:18:
+    Could not find module ‘Test.QuickCheck.Checkers’
+    Perhaps you meant
+      Test.QuickCheck.Modifiers (from QuickCheck-2.8.1@KM7QmXATqfK2Yvr
+X8fG5xW)                                                             
+
+BadMonoid.hs:4:18:
+    Could not find module ‘Test.QuickCheck.Classes’
+    Perhaps you meant
+      Test.QuickCheck.State (from QuickCheck-2.8.1@KM7QmXATqfK2YvrX8fG
+5xW)                                                                 
+      Test.QuickCheck.All (from QuickCheck-2.8.1@KM7QmXATqfK2YvrX8fG5x
+W)                                                                   
+      Test.QuickCheck.Gen (from QuickCheck-2.8.1@KM7QmXATqfK2YvrX8fG5x
+W)                                                                   
+Failed, modules loaded: none.
+Prelude
+λ>  :q
+Leaving GHCi.
+4m➜  global stack build checkers
+Run from outside a project, using implicit global project config
+Using resolver: lts-5.0 from implicit global project's config file: /U
+sers/edmundcape/.stack/global-project/stack.yaml                     
+4m➜  global stack ghci
+Run from outside a project, using implicit global project config
+Using resolver: lts-5.0 from implicit global project's config file: /U
+sers/edmundcape/.stack/global-project/stack.yaml                     
+Error parsing targets: The specified targets matched no packages.
+Perhaps you need to run 'stack init'?
+Warning: build failed, but optimistically launching GHCi anyway
+Configuring GHCi with the following packages: 
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Ok, modules loaded: none.
+Prelude
+λ> :l BadMonoid.hs 
+[1 of 1] Compiling Main             ( BadMonoid.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> main
+
+monoid:
+  left  identity: *** Failed! Falsifiable (after 2 tests):  
+Twoo
+  right identity: *** Failed! Falsifiable (after 2 tests):  
+Twoo
+  associativity:  +++ OK, passed 500 tests.
+*Main
+λ>  quickBatch (applicative(Just "blah"))
+
+<interactive>:4:31:
+    Couldn't match expected type ‘(Double, b0, c0)’
+                with actual type ‘[Char]’
+    In the first argument of ‘Just’, namely ‘"blah"’
+    In the first argument of ‘applicative’, namely ‘(Just "blah")’
+    In the first argument of ‘quickBatch’, namely
+      ‘(applicative (Just "blah"))’
+*Main
+λ>  quickBatch (applicative(Just "blah","",""))
+
+<interactive>:5:41:
+    Couldn't match expected type ‘(Double, b0, c0)’
+                with actual type ‘[Char]’
+    In the expression: ""
+    In the first argument of ‘applicative’, namely
+      ‘(Just "blah", "", "")’
+    In the first argument of ‘quickBatch’, namely
+      ‘(applicative (Just "blah", "", ""))’
+*Main
+λ>  quickBatch (applicative(Just ("blah","","")))
+
+applicative:
+  identity:     +++ OK, passed 500 tests.
+  composition:  +++ OK, passed 500 tests.
+  homomorphism: +++ OK, passed 500 tests.
+  interchange:  +++ OK, passed 500 tests.
+  functor:      +++ OK, passed 500 tests.
+*Main
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:23:10:
+    Not in scope: type constructor or class ‘Arbitrary’
+
+constant.hs:30:10: Not in scope: type constructor or class ‘EqProp’
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> main
+
+monoid:
+  left  identity: *** Failed! Falsifiable (after 1 test):  
+Twoo
+  right identity: *** Failed! Falsifiable (after 1 test):  
+Twoo
+  associativity:  +++ OK, passed 500 tests.
+*Main
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:39:5: parse error on input ‘c’
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+
+constant.hs:16:36: Not in scope: data constructor ‘Fools’
+
+constant.hs:17:38: Not in scope: data constructor ‘Twoo’
+Failed, modules loaded: none.
+Prelude
+λ> :l constant.hs 
+[1 of 1] Compiling Main             ( constant.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> main
+
+applicative:
+  identity:     +++ OK, passed 500 tests.
+  composition:  +++ OK, passed 500 tests.
+  homomorphism: +++ OK, passed 500 tests.
+  interchange:  +++ OK, passed 500 tests.
+  functor:      +++ OK, passed 500 tests.
+*Main
+λ> :l monad_vLambda.hs 
+[1 of 1] Compiling Main             ( monad_vLambda.hs, interpreted )
+
+monad_vLambda.hs:3:4: parse error on input ‘bind’
+Failed, modules loaded: none.
+Prelude
+λ> :l monad_vLambda.hs 
+[1 of 1] Compiling Main             ( monad_vLambda.hs, interpreted )
+
+monad_vLambda.hs:3:1: parse error on input ‘bind’
+Failed, modules loaded: none.
+Prelude
+λ> :l monad_vLambda.hs 
+[1 of 1] Compiling Main             ( monad_vLambda.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :t \f g -> (f .) . g
+\f g -> (f .) . g :: (b -> c) -> (a -> a1 -> b) -> a -> a1 -> c
+*Main
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:13:14:
+    Ambiguous occurrence ‘Left’
+    It could refer to either ‘Main.Left’, defined at nope_monad.hs:3:2
+8                                                                    
+                          or ‘Prelude.Left’,
+                             imported from ‘Prelude’ at nope_monad.hs:
+1:1                                                                  
+                             (and originally defined in ‘Data.Either’)
+Failed, modules loaded: none.
+Prelude
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :t (>>=)
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+*Main
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:14:20:
+    Couldn't match expected type ‘a -> PhhhbbtttEither b b1’
+                with actual type ‘PhhhbbtttEither t0 (a -> b1)’
+    Relevant bindings include
+      a :: a (bound at nope_monad.hs:14:16)
+      (>>=) :: PhhhbbtttEither b a
+               -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+        (bound at nope_monad.hs:14:3)
+    In the pattern: PLeft f
+    In an equation for ‘>>=’: (>>=) (PLeft a) (PLeft f) = PLeft (f a)
+    In the instance declaration for ‘Monad (PhhhbbtttEither b)’
+Failed, modules loaded: none.
+Prelude
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:14:20:
+    Couldn't match expected type ‘a -> PhhhbbtttEither b b1’
+                with actual type ‘PhhhbbtttEither t0 t1’
+    Relevant bindings include
+      a :: a (bound at nope_monad.hs:14:16)
+      (>>=) :: PhhhbbtttEither b a
+               -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+        (bound at nope_monad.hs:14:3)
+    In the pattern: PLeft f
+    In an equation for ‘>>=’: (>>=) (PLeft a) (PLeft f) = _
+    In the instance declaration for ‘Monad (PhhhbbtttEither b)’
+
+nope_monad.hs:14:31:
+    Found hole ‘_’ with type: PhhhbbtttEither b b1
+    Where: ‘b’ is a rigid type variable bound by
+               the instance declaration at nope_monad.hs:12:10
+           ‘b1’ is a rigid type variable bound by
+                the type signature for
+                  (>>=) :: PhhhbbtttEither b a
+                           -> (a -> PhhhbbtttEither b b1) -> Phhhbbttt
+Either b b1                                                          
+                at nope_monad.hs:14:3
+    Relevant bindings include
+      f :: t1 (bound at nope_monad.hs:14:26)
+      a :: a (bound at nope_monad.hs:14:16)
+      (>>=) :: PhhhbbtttEither b a
+               -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+        (bound at nope_monad.hs:14:3)
+    In the expression: _
+    In an equation for ‘>>=’: (>>=) (PLeft a) (PLeft f) = _
+    In the instance declaration for ‘Monad (PhhhbbtttEither b)’
+Failed, modules loaded: none.
+Prelude
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:14:23:
+    Found hole ‘_’ with type: PhhhbbtttEither b b1
+    Where: ‘b’ is a rigid type variable bound by
+               the instance declaration at nope_monad.hs:12:10
+           ‘b1’ is a rigid type variable bound by
+                the type signature for
+                  (>>=) :: PhhhbbtttEither b a
+                           -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+                at nope_monad.hs:14:3
+    Relevant bindings include
+      f :: a -> PhhhbbtttEither b b1 (bound at nope_monad.hs:14:19)
+      a :: a (bound at nope_monad.hs:14:16)
+      (>>=) :: PhhhbbtttEither b a
+               -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+        (bound at nope_monad.hs:14:3)
+    In the expression: _
+    In an equation for ‘>>=’: (>>=) (PLeft a) f = _
+    In the instance declaration for ‘Monad (PhhhbbtttEither b)’
+Failed, modules loaded: none.
+Prelude
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:14:25:
+    Not in scope: ‘a_’
+    Perhaps you meant one of these:
+      ‘a’ (line 14), ‘ap’ (imported from Control.Monad)
+Failed, modules loaded: none.
+Prelude
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:15:14: parse error on input ‘=’
+Failed, modules loaded: none.
+Prelude
+λ> :l nope_monad.hs 
+[1 of 1] Compiling Main             ( nope_monad.hs, interpreted )
+
+nope_monad.hs:16:24:
+    Couldn't match expected type ‘b1’
+                with actual type ‘PhhhbbtttEither b b1’
+      ‘b1’ is a rigid type variable bound by
+           the type signature for
+             (>>=) :: PhhhbbtttEither b a
+                      -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+           at nope_monad.hs:14:3
+    Relevant bindings include
+      f :: a -> PhhhbbtttEither b b1 (bound at nope_monad.hs:14:12)
+      ma :: PhhhbbtttEither b a (bound at nope_monad.hs:14:9)
+      (>>=) :: PhhhbbtttEither b a
+               -> (a -> PhhhbbtttEither b b1) -> PhhhbbtttEither b b1
+        (bound at nope_monad.hs:14:3)
+λ> :q
+Leaving GHCi.
+4m➜  global cd ..
+4m➜  Haskell.drop ls 
+global           hspec-learn      pattern-matching recursion        src
+4m➜  Haskell.drop cd recursion 
+4m➜  recursion git:(master) ✗ 
+4m➜  recursion git:(master) ✗ ls
+TAGS                 cabal.sandbox.config recursion.cabal      test
+bin                  dist                 src
+4m➜  recursion git:(master) ✗ cd ..
+4m➜  Haskell.drop ls
+global           hspec-learn      pattern-matching recursion        src
+4m➜  Haskell.drop cd global 
+4m➜  global stack ghci
+Run from outside a project, using implicit global project config
+Using resolver: lts-5.0 from implicit global project's config file: /Users/edmundcape/.
+stack/global-project/stack.yaml                                                       
+Error parsing targets: The specified targets matched no packages.
+Perhaps you need to run 'stack init'?
+Warning: build failed, but optimistically launching GHCi anyway
+Configuring GHCi with the following packages: 
+GHCi, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+Ok, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:3:57:
+    Not in scope: type constructor or class ‘Compose’
+
+twinplicative.hs:4:16:
+    Not in scope: type constructor or class ‘Compose’
+
+twinplicative.hs:7:10:
+    Not in scope: type constructor or class ‘Compose’
+
+twinplicative.hs:7:34:
+    Not in scope: type constructor or class ‘Compose’
+
+twinplicative.hs:7:51:
+    Not in scope: type constructor or class ‘Compose’
+
+twinplicative.hs:8:2: Not in scope: data constructor ‘Compose’
+
+twinplicative.hs:8:18: Not in scope: data constructor ‘Compose’
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:8:10: Warning:
+    No explicit implementation for
+      ‘Prelude.<*>’
+    In the instance declaration for ‘Applicative (Compose f g)’
+Ok, modules loaded: Main.
+*Main
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:10:15:
+    Couldn't match type ‘a’ with ‘f0 a’
+      ‘a’ is a rigid type variable bound by
+          the type signature for pure :: a -> Compose f g a
+          at twinplicative.hs:9:11
+    Expected type: a -> a
+      Actual type: a -> f0 a
+    Relevant bindings include
+      pure :: a -> Compose f g a (bound at twinplicative.hs:10:3)
+    In the second argument of ‘(.)’, namely ‘pure’
+    In the expression: pure . pure
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:10:12:
+    Couldn't match type ‘a’ with ‘f0 a’
+      ‘a’ is a rigid type variable bound by
+          the type signature for pure :: a -> Compose f g a
+          at twinplicative.hs:9:11
+    Expected type: Compose f g a
+      Actual type: Compose f g (f0 a)
+    Relevant bindings include
+      a :: a (bound at twinplicative.hs:10:8)
+      pure :: a -> Compose f g a (bound at twinplicative.hs:10:3)
+    In the expression: pure . pure $ a
+    In an equation for ‘pure’: pure a = pure . pure $ a
+    In the instance declaration for ‘Applicative (Compose f g)’
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:10:12:
+    Couldn't match type ‘a’ with ‘f0 a’
+      ‘a’ is a rigid type variable bound by
+          the type signature for pure :: a -> Compose f g a
+          at twinplicative.hs:10:3
+    Expected type: Compose f g a
+      Actual type: Compose f g (f0 a)
+    Relevant bindings include
+      a :: a (bound at twinplicative.hs:10:8)
+      pure :: a -> Compose f g a (bound at twinplicative.hs:10:3)
+    In the expression: pure . pure $ a
+    In an equation for ‘pure’: pure a = pure . pure $ a
+    In the instance declaration for ‘Applicative (Compose f g)’
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:14:36:
+    Ambiguous occurrence ‘<*>’
+    It could refer to either ‘Main.<*>’,
+                             defined at twinplicative.hs:13:13
+                          or ‘Prelude.<*>’,
+                             imported from ‘Prelude’ at twinplicative.hs:1:1
+                             (and originally defined in ‘GHC.Base’)
+
+twinplicative.hs:14:44:
+    Ambiguous occurrence ‘<*>’
+    It could refer to either ‘Main.<*>’,
+                             defined at twinplicative.hs:13:13
+                          or ‘Prelude.<*>’,
+                             imported from ‘Prelude’ at twinplicative.hs:1:1
+                             (and originally defined in ‘GHC.Base’)
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:10:10:
+    Couldn't match expected type ‘a -> Compose f g a’
+                with actual type ‘Compose ((->) a0) g0 (f0 a0)’
+    Relevant bindings include
+      pure :: a -> Compose f g a (bound at twinplicative.hs:10:3)
+    In the expression: Compose $ pure . pure
+    In an equation for ‘pure’: pure = Compose $ pure . pure
+    In the instance declaration for ‘Applicative (Compose f g)’
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+
+twinplicative.hs:10:22:
+    Couldn't match type ‘f’ with ‘(->) a0’
+      ‘f’ is a rigid type variable bound by
+          the instance declaration at twinplicative.hs:8:10
+    Expected type: f (g a)
+      Actual type: a0 -> g a
+    Relevant bindings include
+      pure :: a -> Compose f g a (bound at twinplicative.hs:10:3)
+    In the second argument of ‘($)’, namely ‘pure . pure a’
+    In the expression: Compose $ pure . pure a
+    In an equation for ‘pure’: pure a = Compose $ pure . pure a
+Failed, modules loaded: none.
+Prelude
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ>  :l twinplicative.hs 
+[1 of 1] Compiling Main             ( twinplicative.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ>  :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+
+monadT_eitherT.hs:6:39:
+    Not in scope: ‘fa’
+    Perhaps you meant one of these: ‘f’ (line 5), ‘ma’ (line 5)
+Failed, modules loaded: none.
+Prelude
+λ>  :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+
+monadT_eitherT.hs:4:10:
+    Variable ‘f’ occurs more often than in the instance head
+      in the constraint: Functor f
+    (Use UndecidableInstances to permit this)
+    In the instance declaration for ‘Functor (EitherT e m)’
+Failed, modules loaded: none.
+Prelude
+λ>  :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+
+monadT_eitherT.hs:11:46:
+    Couldn't match type ‘Either e (a -> b)’ with ‘a -> b’
+    Expected type: m (a -> b)
+      Actual type: m (Either e (a -> b))
+    Relevant bindings include
+      v :: m (Either e a) (bound at monadT_eitherT.hs:10:30)
+      f :: m (Either e (a -> b)) (bound at monadT_eitherT.hs:10:18)
+      (<*>) :: EitherT e m (a -> b) -> EitherT e m a -> EitherT e m b
+        (bound at monadT_eitherT.hs:10:3)
+    In the second argument of ‘(<$>)’, namely ‘f’
+    In the first argument of ‘(<*>)’, namely ‘((<$>) <$> f)’
+Failed, modules loaded: none.
+Prelude
+λ>  :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ>  :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> runEitherT $ EitherT [Right 1, Left "blah"]
+[Right 1,Left "blah"]
+*Main
+λ> runEitherT $ EitherT [Right 1, Left "blah", Right 3]
+[Right 1,Left "blah",Right 3]
+*Main
+λ> :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> :l monadT_eitherT.hs 
+[1 of 1] Compiling Main             ( monadT_eitherT.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> runReaderT $ ReaderT [3,4,5]
+
+<interactive>:22:1: Not in scope: ‘runReaderT’
+
+<interactive>:22:14: Not in scope: data constructor ‘ReaderT’
+*Main
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+
+monadT_readerT.hs:5:25:
+    Couldn't match expected type ‘t1 -> ReaderT r m b’
+                with actual type ‘ReaderT r m b’
+    Relevant bindings include
+      ma :: r -> m a (bound at monadT_readerT.hs:5:19)
+      f :: a -> b (bound at monadT_readerT.hs:5:8)
+      fmap :: (a -> b) -> ReaderT r m a -> ReaderT r m b
+        (bound at monadT_readerT.hs:5:3)
+    The lambda expression ‘\ r -> ReaderT $ (fmap . fmap) f ma’
+    has one argument,
+    but its type ‘ReaderT r m b’ has none
+    In the expression: \ r -> ReaderT $ (fmap . fmap) f ma
+    In an equation for ‘fmap’:
+        fmap f (ReaderT ma) = \ r -> ReaderT $ (fmap . fmap) f ma
+
+monadT_readerT.hs:10:35:
+    Couldn't match expected type ‘t0 -> ReaderT e m b’
+                with actual type ‘ReaderT e m b’
+    Relevant bindings include
+      v :: e -> m a (bound at monadT_readerT.hs:10:30)
+      f :: e -> m (a -> b) (bound at monadT_readerT.hs:10:18)
+      (<*>) :: ReaderT e m (a -> b) -> ReaderT e m a -> ReaderT e m b
+        (bound at monadT_readerT.hs:10:3)
+    The lambda expression ‘\ r -> ReaderT $ ((<*>) <$> f) <*> v’
+    has one argument,
+    but its type ‘ReaderT e m b’ has none
+    In the expression: \ r -> ReaderT $ ((<*>) <$> f) <*> v
+    In an equation for ‘<*>’:
+        (<*>) (ReaderT f) (ReaderT v)
+          = \ r -> ReaderT $ ((<*>) <$> f) <*> v
+
+monadT_readerT.hs:17:14:
+    Couldn't match expected type ‘r1 -> ReaderT r0 m0 a0’
+                with actual type ‘ReaderT e m b’
+    Relevant bindings include
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    The lambda expression ‘\ r -> ReaderT $ ...’ has one argument,
+    but its type ‘ReaderT e m b’ has none
+    In the expression:
+      \ r
+        -> ReaderT
+           $ do { v <- ma;
+                  a <- runReaderT v $ r;
+                  .... }
+    In an equation for ‘>>=’:
+        ma >>= f
+          = \ r
+              -> ReaderT
+                 $ do { v <- ma;
+                        .... }
+
+monadT_readerT.hs:18:19:
+    Couldn't match type ‘ReaderT e m b’ with ‘r0 -> m0 a0’
+    Expected type: ReaderT e m a -> (a -> ReaderT e m b) -> r0 -> m0 a0
+      Actual type: ReaderT e m a
+                   -> (a -> ReaderT e m b) -> ReaderT e m b
+    Relevant bindings include
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    In a stmt of a 'do' block: v <- ma
+    In the second argument of ‘($)’, namely
+      ‘do { v <- ma;
+            a <- runReaderT v $ r;
+            f a }’
+    In the expression:
+      ReaderT
+      $ do { v <- ma;
+             a <- runReaderT v $ r;
+             f a }
+Failed, modules loaded: none.
+Prelude
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+
+monadT_readerT.hs:10:35:
+    Couldn't match expected type ‘t0 -> ReaderT e m b’
+                with actual type ‘ReaderT e m b’
+    Relevant bindings include
+      v :: e -> m a (bound at monadT_readerT.hs:10:30)
+      f :: e -> m (a -> b) (bound at monadT_readerT.hs:10:18)
+      (<*>) :: ReaderT e m (a -> b) -> ReaderT e m a -> ReaderT e m b
+        (bound at monadT_readerT.hs:10:3)
+    The lambda expression ‘\ r -> ReaderT $ ((<*>) <$> f) <*> v’
+    has one argument,
+    but its type ‘ReaderT e m b’ has none
+    In the expression: \ r -> ReaderT $ ((<*>) <$> f) <*> v
+    In an equation for ‘<*>’:
+        (<*>) (ReaderT f) (ReaderT v)
+          = \ r -> ReaderT $ ((<*>) <$> f) <*> v
+
+monadT_readerT.hs:17:14:
+    Couldn't match expected type ‘r1 -> ReaderT r0 m0 a0’
+                with actual type ‘ReaderT e m b’
+    Relevant bindings include
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    The lambda expression ‘\ r -> ReaderT $ ...’ has one argument,
+    but its type ‘ReaderT e m b’ has none
+    In the expression:
+      \ r
+        -> ReaderT
+           $ do { v <- ma;
+                  a <- runReaderT v $ r;
+                  .... }
+    In an equation for ‘>>=’:
+        ma >>= f
+          = \ r
+              -> ReaderT
+                 $ do { v <- ma;
+                        .... }
+
+monadT_readerT.hs:18:19:
+    Couldn't match type ‘ReaderT e m b’ with ‘r0 -> m0 a0’
+    Expected type: ReaderT e m a -> (a -> ReaderT e m b) -> r0 -> m0 a0
+      Actual type: ReaderT e m a
+                   -> (a -> ReaderT e m b) -> ReaderT e m b
+    Relevant bindings include
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    In a stmt of a 'do' block: v <- ma
+    In the second argument of ‘($)’, namely
+      ‘do { v <- ma;
+            a <- runReaderT v $ r;
+            f a }’
+    In the expression:
+      ReaderT
+      $ do { v <- ma;
+             a <- runReaderT v $ r;
+             f a }
+Failed, modules loaded: none.
+Prelude
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+
+monadT_readerT.hs:17:22: parse error on input ‘\’
+Failed, modules loaded: none.
+Prelude
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+
+monadT_readerT.hs:17:14:
+    Couldn't match type ‘m’ with ‘ReaderT e m’
+      ‘m’ is a rigid type variable bound by
+          the instance declaration at monadT_readerT.hs:15:10
+    Expected type: ReaderT e m b
+      Actual type: ReaderT e (ReaderT e m) b
+    Relevant bindings include
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    In the expression:
+      ReaderT
+      $ \ r
+          -> do { v <- ma;
+                  a <- runReaderT v $ r;
+                  .... }
+    In an equation for ‘>>=’:
+        ma >>= f
+          = ReaderT
+            $ \ r
+                -> do { v <- ma;
+                        .... }
+    In the instance declaration for ‘Monad (ReaderT e m)’
+
+monadT_readerT.hs:19:35:
+    Couldn't match expected type ‘ReaderT e (ReaderT e m) a’
+                with actual type ‘a’
+      ‘a’ is a rigid type variable bound by
+          the type signature for
+            (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e
+ m b                                                                  
+          at monadT_readerT.hs:17:6
+    Relevant bindings include
+      v :: a (bound at monadT_readerT.hs:18:19)
+      r :: e (bound at monadT_readerT.hs:17:25)
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    In the first argument of ‘runReaderT’, namely ‘v’
+    In the expression: runReaderT v
+Failed, modules loaded: none.
+Prelude
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> mr = ReaderT (\r -> [2,3])
+
+<interactive>:28:4: parse error on input ‘=’
+*Main
+λ> let mr = ReaderT (\r -> [2,3])
+*Main
+λ> runReaderT mr
+
+<interactive>:30:1:
+    No instance for (Show (r0 -> [a0]))
+      (maybe you haven't applied enough arguments to a function?)
+      arising from a use of ‘print’
+    In the first argument of ‘print’, namely ‘it’
+    In a stmt of an interactive GHCi command: print it
+*Main
+λ> :t runReader mr
+
+<interactive>:1:1:
+    Not in scope: ‘runReader’
+    Perhaps you meant ‘runReaderT’ (line 2)
+*Main
+λ> :t runReaderT mr
+runReaderT mr :: Num a => r -> [a]
+*Main
+λ> runReaderT mr
+
+<interactive>:33:1:
+    No instance for (Show (r0 -> [a0]))
+      (maybe you haven't applied enough arguments to a function?)
+      arising from a use of ‘print’
+    In the first argument of ‘print’, namely ‘it’
+    In a stmt of an interactive GHCi command: print it
+*Main
+λ> runReaderT mr $ "_"
+[2,3]
+*Main
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+
+monadT_readerT.hs:19:18:
+    Couldn't match type ‘m’ with ‘ReaderT e m’
+      ‘m’ is a rigid type variable bound by
+          the instance declaration at monadT_readerT.hs:15:10
+    Expected type: m b
+      Actual type: ReaderT e m b
+    Relevant bindings include
+      r :: e (bound at monadT_readerT.hs:17:25)
+      f :: a -> ReaderT e m b (bound at monadT_readerT.hs:17:10)
+      ma :: ReaderT e m a (bound at monadT_readerT.hs:17:3)
+      (>>=) :: ReaderT e m a -> (a -> ReaderT e m b) -> ReaderT e m b
+        (bound at monadT_readerT.hs:17:3)
+    In a stmt of a 'do' block: f a
+    In the expression:
+      do { a <- runReaderT ma $ r;
+           f a }
+Failed, modules loaded: none.
+Prelude
+λ> :l monadT_readerT.hs 
+[1 of 1] Compiling Main             ( monadT_readerT.hs, interpreted )
+Ok, modules loaded: Main.
+*Main
+λ> let mr = ReaderT (\r -> [2+r,3+r])
+*Main
+λ> :t runReaderT mr
+runReaderT mr :: Num a => a -> [a]
+*Main
+λ> runReaderT mr $ 500
+[502,503]
+*Main
+λ> :q
+Leaving GHCi.
+4m➜  global 
